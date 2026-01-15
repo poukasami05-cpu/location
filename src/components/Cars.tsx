@@ -1,4 +1,4 @@
-import { Fuel, Users, Gauge, Star, Sparkles, Shield, Zap, Calendar, MapPin, ChevronRight, Heart, Play, Eye } from 'lucide-react';
+import { Fuel, Users, Gauge, Star, Sparkles, Shield, Zap, Calendar, MapPin, ChevronRight, Heart, Play, Eye, ChevronLeft } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 
@@ -281,6 +281,7 @@ export const Cars: React.FC<CarsProps> = ({ onCarSelect }) => {
   const [activeVideo, setActiveVideo] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [favorites, setFavorites] = useState<number[]>([]);
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const itemsPerPage = 6;
   const containerRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
@@ -360,7 +361,7 @@ export const Cars: React.FC<CarsProps> = ({ onCarSelect }) => {
   };
 
   return (
-    <section id="cars" className="relative py-28 overflow-hidden">
+    <section id="cars" className="relative py-12 sm:py-16 md:py-20 lg:py-28 overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-white via-blue-50/20 to-purple-50/10 dark:from-gray-900 dark:via-blue-900/10 dark:to-purple-900/10" />
@@ -368,110 +369,137 @@ export const Cars: React.FC<CarsProps> = ({ onCarSelect }) => {
         
         {/* Animated Grid */}
         <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.01]">
-          <div className="h-full w-full bg-[linear-gradient(90deg,#888_1px,transparent_1px)] bg-[size:80px_80px]" />
+          <div className="h-full w-full bg-[linear-gradient(90deg,#888_1px,transparent_1px)] bg-[size:40px_40px] sm:bg-[size:60px_60px] lg:bg-[size:80px_80px]" />
         </div>
         
         {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl animate-float-slow" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-float-reverse" />
+        <div className="absolute top-10 sm:top-20 left-4 sm:left-10 w-40 h-40 sm:w-64 sm:h-64 bg-blue-500/5 rounded-full blur-3xl animate-float-slow" />
+        <div className="absolute bottom-10 sm:bottom-20 right-4 sm:right-10 w-48 h-48 sm:w-96 sm:h-96 bg-purple-500/5 rounded-full blur-3xl animate-float-reverse" />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
-        <div className="text-center mb-20 relative">
-          <div className="inline-flex items-center space-x-2 mb-6 animate-fade-in">
-            <Sparkles className="w-5 h-5 text-blue-500 animate-pulse" />
-            <span className="text-sm font-semibold tracking-wider bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        <div className="text-center mb-8 sm:mb-12 lg:mb-20 relative">
+          <div className="inline-flex items-center space-x-2 mb-4 sm:mb-6 animate-fade-in">
+            <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500 animate-pulse" />
+            <span className="text-xs sm:text-sm font-semibold tracking-wider bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               FLEET D'EXCEPTION
             </span>
           </div>
           
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 relative">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 relative">
             <span className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-gray-200 dark:to-white bg-clip-text text-transparent">
               Véhicules
             </span>
-            <span className="block text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text animate-gradient bg-[length:200%_auto]">
+            <span className="block text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text animate-gradient bg-[length:200%_auto] mt-1 sm:mt-2">
               Premium
             </span>
-            <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full" />
+            <div className="absolute -bottom-2 sm:-bottom-3 left-1/2 transform -translate-x-1/2 w-24 sm:w-32 h-0.5 sm:h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full" />
           </h2>
           
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-12 leading-relaxed animate-fade-in-up">
+          <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8 sm:mb-12 leading-relaxed animate-fade-in-up px-4 sm:px-0">
             Explorez notre collection exclusive de véhicules haut de gamme. 
             Chaque modèle est méticuleusement entretenu et prêt à vous offrir une expérience inoubliable.
           </p>
 
           {/* Stats Counter */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mb-12">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 md:gap-6 max-w-4xl mx-auto mb-8 sm:mb-12 px-2 sm:px-0">
             {[
-              { value: cars.length, label: 'Modèles', icon: <Zap className="w-6 h-6" /> },
-              { value: '4.9', label: 'Note moyenne', icon: <Star className="w-6 h-6" /> },
-              { value: '24/7', label: 'Assistance', icon: <Shield className="w-6 h-6" /> },
-              { value: '100%', label: 'Satisfaction', icon: <Sparkles className="w-6 h-6" /> }
+              { value: cars.length, label: 'Modèles', icon: <Zap className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" /> },
+              { value: '4.9', label: 'Note moyenne', icon: <Star className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" /> },
+              { value: '24/7', label: 'Assistance', icon: <Shield className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" /> },
+              { value: '100%', label: 'Satisfaction', icon: <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" /> }
             ].map((stat, idx) => (
               <div 
                 key={idx}
-                className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-lg rounded-2xl p-6 border border-white/20 dark:border-gray-700/50 hover:border-blue-500/30 transition-all duration-500 group hover:scale-105"
+                className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-lg rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-white/20 dark:border-gray-700/50 hover:border-blue-500/30 transition-all duration-500 group hover:scale-105"
               >
-                <div className="flex items-center justify-center mb-4 text-blue-600 dark:text-blue-400">
+                <div className="flex items-center justify-center mb-2 sm:mb-4 text-blue-600 dark:text-blue-400">
                   {stat.icon}
                 </div>
-                <div className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <div className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   {stat.value}
                 </div>
-                <div className="text-sm text-gray-600 dark:text-gray-400 mt-2">{stat.label}</div>
+                <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1 sm:mt-2">{stat.label}</div>
               </div>
             ))}
           </div>
         </div>
 
+        {/* Mobile Filter Toggle */}
+        <div className="lg:hidden mb-6">
+          <button
+            onClick={() => setIsFiltersOpen(!isFiltersOpen)}
+            className="w-full px-4 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium flex items-center justify-between"
+          >
+            <span>Filtrer et Trier</span>
+            <ChevronRight className={`w-5 h-5 transform transition-transform ${isFiltersOpen ? 'rotate-90' : ''}`} />
+          </button>
+        </div>
+
         {/* Filters & Controls */}
-        <div className="flex flex-col lg:flex-row justify-between items-center mb-12 gap-6 animate-fade-in-up">
-          <div className="flex flex-wrap gap-3">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => {
-                  setSelectedCategory(category);
-                  setCurrentPage(1);
-                }}
-                className={`px-6 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 ${
-                  selectedCategory === category
-                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25'
-                    : 'bg-white/80 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-                }`}
-              >
-                {category}
-              </button>
-            ))}
+        <div className={`${isFiltersOpen ? 'block' : 'hidden'} lg:flex lg:flex-col lg:flex-row justify-between items-center mb-8 sm:mb-12 gap-4 sm:gap-6 animate-fade-in-up`}>
+          {/* Categories Filter */}
+          <div className="w-full lg:w-auto">
+            <div className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 lg:hidden">Catégories</div>
+            <div className="flex flex-wrap gap-2 sm:gap-3 max-h-40 lg:max-h-none overflow-y-auto lg:overflow-visible pb-2">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => {
+                    setSelectedCategory(category);
+                    setCurrentPage(1);
+                  }}
+                  className={`px-4 py-2 sm:px-6 sm:py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 text-sm sm:text-base whitespace-nowrap ${
+                    selectedCategory === category
+                      ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25'
+                      : 'bg-white/80 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
           </div>
 
-          <div className="flex items-center space-x-4">
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg px-4 py-3 rounded-xl border border-gray-300/50 dark:border-gray-600/50 text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-            >
-              <option value="popular">Plus populaires</option>
-              <option value="price">Prix croissant</option>
-              <option value="price-desc">Prix décroissant</option>
-              <option value="rating">Meilleures notes</option>
-              <option value="power">Puissance</option>
-            </select>
-            
-            <button className="px-6 py-3 rounded-xl bg-gradient-to-r from-gray-900 to-gray-800 dark:from-gray-800 dark:to-gray-700 text-white font-medium hover:shadow-xl transition-all duration-300 flex items-center space-x-2 group">
-              <MapPin className="w-5 h-5" />
-              <span>Localiser</span>
-            </button>
+          {/* Sort and Location Controls */}
+          <div className="w-full lg:w-auto mt-4 lg:mt-0">
+            <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
+              <div className="w-full sm:w-auto">
+                <div className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 lg:hidden">Trier par</div>
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="w-full sm:w-auto bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg px-4 py-3 rounded-xl border border-gray-300/50 dark:border-gray-600/50 text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-sm sm:text-base"
+                >
+                  <option value="popular">Plus populaires</option>
+                  <option value="price">Prix croissant</option>
+                  <option value="price-desc">Prix décroissant</option>
+                  <option value="rating">Meilleures notes</option>
+                  <option value="power">Puissance</option>
+                </select>
+              </div>
+              
+              <button className="w-full sm:w-auto px-4 py-3 sm:px-6 sm:py-3 rounded-xl bg-gradient-to-r from-gray-900 to-gray-800 dark:from-gray-800 dark:to-gray-700 text-white font-medium hover:shadow-xl transition-all duration-300 flex items-center justify-center space-x-2 group text-sm sm:text-base">
+                <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span>Localiser</span>
+              </button>
+            </div>
           </div>
         </div>
 
+        {/* Results Info */}
+        <div className="text-center text-gray-600 dark:text-gray-400 mb-6 sm:mb-8 text-sm sm:text-base">
+          Affichage de {Math.min((currentPage - 1) * itemsPerPage + 1, filteredCars.length)} à {Math.min(currentPage * itemsPerPage, filteredCars.length)} sur {filteredCars.length} véhicules
+          {selectedCategory !== 'Tous' && ` dans la catégorie "${selectedCategory}"`}
+        </div>
+
         {/* Cars Grid */}
-        <div ref={containerRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div ref={containerRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-8 sm:mb-12 lg:mb-16">
           {paginatedCars.map((car, index) => (
             <div
               key={car.id}
-              className="car-card relative group bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-3xl overflow-hidden shadow-2xl shadow-blue-500/5 dark:shadow-blue-900/10 border border-gray-200/50 dark:border-gray-700/50 transform transition-all duration-700 hover:scale-[1.02] hover:shadow-3xl hover:shadow-blue-500/10 dark:hover:shadow-blue-900/20 cursor-pointer"
+              className="car-card relative group bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl sm:shadow-2xl shadow-blue-500/5 dark:shadow-blue-900/10 border border-gray-200/50 dark:border-gray-700/50 transform transition-all duration-700 hover:scale-[1.02] hover:shadow-2xl sm:hover:shadow-3xl hover:shadow-blue-500/10 dark:hover:shadow-blue-900/20 cursor-pointer"
               onMouseEnter={() => setHoveredCar(car.id)}
               onMouseLeave={() => setHoveredCar(null)}
               onClick={() => handleViewDetails(car.id)}
@@ -483,10 +511,11 @@ export const Cars: React.FC<CarsProps> = ({ onCarSelect }) => {
             >
               {/* Popular Badge */}
               {car.popular && (
-                <div className="absolute top-4 left-4 z-20">
-                  <div className="px-4 py-1.5 rounded-full bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-sm font-bold flex items-center space-x-1 animate-pulse-slow">
-                    <Star className="w-3 h-3 fill-white" />
-                    <span>POPULAIRE</span>
+                <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-20">
+                  <div className="px-2 py-1 sm:px-4 sm:py-1.5 rounded-full bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-xs sm:text-sm font-bold flex items-center space-x-1 animate-pulse-slow">
+                    <Star className="w-2 h-2 sm:w-3 sm:h-3 fill-white" />
+                    <span className="hidden xs:inline">POPULAIRE</span>
+                    <span className="xs:hidden">POP</span>
                   </div>
                 </div>
               )}
@@ -494,34 +523,34 @@ export const Cars: React.FC<CarsProps> = ({ onCarSelect }) => {
               {/* Wishlist Button */}
               <button
                 onClick={(e) => handleWishlist(car.id, e)}
-                className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg flex items-center justify-center hover:bg-red-500/10 hover:text-red-500 transition-all duration-300 transform hover:scale-110"
+                className="absolute top-3 sm:top-4 right-3 sm:right-4 z-20 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg flex items-center justify-center hover:bg-red-500/10 hover:text-red-500 transition-all duration-300 transform hover:scale-110"
               >
-                <Heart className={`w-5 h-5 ${favorites.includes(car.id) ? 'fill-red-500 text-red-500' : ''}`} />
+                <Heart className={`w-4 h-4 sm:w-5 sm:h-5 ${favorites.includes(car.id) ? 'fill-red-500 text-red-500' : ''}`} />
               </button>
 
               {/* Action Buttons */}
-              <div className="absolute top-16 right-4 z-20 flex flex-col gap-2">
+              <div className="absolute top-12 sm:top-16 right-3 sm:right-4 z-20 flex flex-col gap-1 sm:gap-2">
                 {/* Quick View Button */}
                 <button
                   onClick={(e) => handleQuickView(car.id, e)}
-                  className="w-10 h-10 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg flex items-center justify-center hover:bg-blue-500/10 hover:text-blue-500 transition-all duration-300 transform hover:scale-110"
+                  className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg flex items-center justify-center hover:bg-blue-500/10 hover:text-blue-500 transition-all duration-300 transform hover:scale-110"
                   title="Vue rapide"
                 >
-                  <Eye className="w-5 h-5" />
+                  <Eye className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5" />
                 </button>
 
                 {/* Video Preview Button */}
                 <button
                   onClick={(e) => handleVideoPreview(car.id, e)}
-                  className="w-10 h-10 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg flex items-center justify-center hover:bg-purple-500/10 hover:text-purple-500 transition-all duration-300 transform hover:scale-110"
+                  className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg flex items-center justify-center hover:bg-purple-500/10 hover:text-purple-500 transition-all duration-300 transform hover:scale-110"
                   title="Voir la vidéo"
                 >
-                  <Play className="w-5 h-5" />
+                  <Play className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5" />
                 </button>
               </div>
 
               {/* Car Image */}
-              <div className="relative h-72 overflow-hidden">
+              <div className="relative h-48 sm:h-56 md:h-64 lg:h-72 overflow-hidden">
                 <img
                   src={car.image}
                   alt={car.name}
@@ -534,12 +563,12 @@ export const Cars: React.FC<CarsProps> = ({ onCarSelect }) => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
                 
                 {/* Rating & Reviews */}
-                <div className="absolute bottom-4 left-4 bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg px-4 py-2 rounded-full flex items-center space-x-2">
+                <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg px-2 py-1 sm:px-4 sm:py-2 rounded-full flex items-center space-x-1 sm:space-x-2">
                   <div className="flex">
                     {[...Array(5)].map((_, i) => (
                       <Star
                         key={i}
-                        className={`w-4 h-4 ${
+                        className={`w-3 h-3 sm:w-4 sm:h-4 ${
                           i < Math.floor(car.rating)
                             ? 'fill-yellow-400 text-yellow-400'
                             : 'fill-gray-300 dark:fill-gray-600 text-gray-300 dark:text-gray-600'
@@ -547,81 +576,88 @@ export const Cars: React.FC<CarsProps> = ({ onCarSelect }) => {
                       />
                     ))}
                   </div>
-                  <span className="text-sm font-bold text-gray-900 dark:text-white">{car.rating}</span>
-                  <span className="text-xs text-gray-600 dark:text-gray-400">({car.reviews})</span>
+                  <span className="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">{car.rating}</span>
+                  <span className="text-xs text-gray-600 dark:text-gray-400 hidden xs:inline">({car.reviews})</span>
                 </div>
 
                 {/* Category Tag */}
-                <div className="absolute bottom-4 right-4">
-                  <span className="px-3 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-700 dark:text-blue-300">
+                <div className="absolute bottom-3 sm:bottom-4 right-3 sm:right-4">
+                  <span className="px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-700 dark:text-blue-300 whitespace-nowrap">
                     {car.category}
                   </span>
                 </div>
               </div>
 
               {/* Car Details */}
-              <div className="p-8">
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+              <div className="p-4 sm:p-6 md:p-8">
+                <div className="flex justify-between items-start mb-3 sm:mb-4">
+                  <div className="max-w-[70%]">
+                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1 sm:mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-1">
                       {car.name}
                     </h3>
                     <div className="flex items-center gap-2">
-                      <div className={`w-3 h-3 rounded-full`} style={{ backgroundColor: car.color }} />
-                      <span className="text-sm text-gray-600 dark:text-gray-400">{car.specs.fuel}</span>
+                      <div className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full`} style={{ backgroundColor: car.color }} />
+                      <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">{car.specs.fuel}</span>
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    <div className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                       {car.price}€
                     </div>
-                    <div className="text-sm text-gray-500 dark:text-gray-400 line-through">{car.originalPrice}€</div>
+                    <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 line-through">{car.originalPrice}€</div>
                     <div className="text-xs text-gray-500 dark:text-gray-400">/jour</div>
                   </div>
                 </div>
 
                 {/* Specs Grid */}
-                <div className="grid grid-cols-3 gap-4 mb-6 py-4 border-y border-gray-200/50 dark:border-gray-700/50">
+                <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4 mb-4 sm:mb-6 py-3 sm:py-4 border-y border-gray-200/50 dark:border-gray-700/50">
                   {[
-                    { icon: <Fuel className="w-5 h-5" />, label: 'Énergie', value: car.specs.fuel },
-                    { icon: <Users className="w-5 h-5" />, label: 'Places', value: car.specs.seats },
-                    { icon: <Gauge className="w-5 h-5" />, label: 'Vitesse', value: car.specs.speed },
+                    { icon: <Fuel className="w-4 h-4 sm:w-5 sm:h-5" />, label: 'Énergie', value: car.specs.fuel },
+                    { icon: <Users className="w-4 h-4 sm:w-5 sm:h-5" />, label: 'Places', value: car.specs.seats },
+                    { icon: <Gauge className="w-4 h-4 sm:w-5 sm:h-5" />, label: 'Vitesse', value: car.specs.speed },
                   ].map((spec, idx) => (
                     <div key={idx} className="text-center group-hover:scale-105 transition-transform">
-                      <div className="flex justify-center mb-2 text-blue-600 dark:text-blue-400">
+                      <div className="flex justify-center mb-1 sm:mb-2 text-blue-600 dark:text-blue-400">
                         {spec.icon}
                       </div>
-                      <div className="text-sm text-gray-600 dark:text-gray-400">{spec.label}</div>
-                      <div className="text-lg font-semibold text-gray-900 dark:text-white">{spec.value}</div>
+                      <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">{spec.label}</div>
+                      <div className="text-sm sm:text-lg font-semibold text-gray-900 dark:text-white truncate" title={spec.value}>
+                        {spec.value}
+                      </div>
                     </div>
                   ))}
                 </div>
 
                 {/* Power & Acceleration Badges */}
-                <div className="flex gap-3 mb-6">
-                  <div className="flex-1 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-xl p-3 text-center">
-                    <div className="text-sm text-gray-600 dark:text-gray-400">Puissance</div>
-                    <div className="text-xl font-bold text-gray-900 dark:text-white">{car.specs.power}</div>
+                <div className="flex gap-2 sm:gap-3 mb-4 sm:mb-6">
+                  <div className="flex-1 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-lg sm:rounded-xl p-2 sm:p-3 text-center">
+                    <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Puissance</div>
+                    <div className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white truncate" title={car.specs.power}>
+                      {car.specs.power}
+                    </div>
                   </div>
-                  <div className="flex-1 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-xl p-3 text-center">
-                    <div className="text-sm text-gray-600 dark:text-gray-400">0-100 km/h</div>
-                    <div className="text-xl font-bold text-gray-900 dark:text-white">{car.specs.acceleration}</div>
+                  <div className="flex-1 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-lg sm:rounded-xl p-2 sm:p-3 text-center">
+                    <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">0-100 km/h</div>
+                    <div className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white truncate" title={car.specs.acceleration}>
+                      {car.specs.acceleration}
+                    </div>
                   </div>
                 </div>
 
                 {/* Features Preview */}
-                <div className="mb-6">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="text-sm text-gray-500 dark:text-gray-400">Équipements inclus</div>
+                <div className="mb-4 sm:mb-6">
+                  <div className="flex items-center justify-between mb-2 sm:mb-3">
+                    <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Équipements inclus</div>
                     <span className="text-xs text-blue-600 dark:text-blue-400">
                       +{car.features.length - 2} autres
                     </span>
                   </div>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-1 sm:gap-2">
                     {car.features.slice(0, 2).map((feature, idx) => (
                       <span
                         key={idx}
-                        className="px-3 py-1.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300"
+                        className="px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 truncate max-w-full"
+                        title={feature}
                       >
                         {feature}
                       </span>
@@ -630,22 +666,24 @@ export const Cars: React.FC<CarsProps> = ({ onCarSelect }) => {
                 </div>
 
                 {/* CTA Buttons */}
-                <div className="flex items-center justify-between pt-4 border-t border-gray-200/50 dark:border-gray-700/50">
-                  <div className="flex items-center space-x-2">
-                    <Calendar className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-                    <span className="text-sm text-gray-600 dark:text-gray-400">{car.availability}</span>
+                <div className="flex items-center justify-between pt-3 sm:pt-4 border-t border-gray-200/50 dark:border-gray-700/50">
+                  <div className="flex items-center space-x-1 sm:space-x-2">
+                    <Calendar className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500 dark:text-gray-400" />
+                    <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 truncate max-w-[80px] sm:max-w-none" title={car.availability}>
+                      {car.availability}
+                    </span>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-1 sm:gap-2">
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         handleReservation(car.id);
                       }}
-                      className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold hover:shadow-xl transition-all duration-300 hover:scale-105 group"
+                      className="px-3 py-1.5 sm:px-4 sm:py-2.5 md:px-6 md:py-2.5 rounded-lg sm:rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold hover:shadow-xl transition-all duration-300 hover:scale-105 group text-xs sm:text-sm md:text-base"
                     >
-                      <span className="flex items-center space-x-2">
+                      <span className="flex items-center space-x-1 sm:space-x-2">
                         <span>Réserver</span>
-                        <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
                       </span>
                     </button>
                   </div>
@@ -653,14 +691,14 @@ export const Cars: React.FC<CarsProps> = ({ onCarSelect }) => {
               </div>
 
               {/* Hover Effect */}
-              <div className="absolute inset-0 border-2 border-transparent group-hover:border-blue-500/20 rounded-3xl transition-all duration-500 pointer-events-none" />
+              <div className="absolute inset-0 border-2 border-transparent group-hover:border-blue-500/20 rounded-2xl sm:rounded-3xl transition-all duration-500 pointer-events-none" />
               
               {/* Link to Details Overlay */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-                <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-                  <div className="px-6 py-2 rounded-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg text-gray-900 dark:text-white text-sm font-semibold flex items-center gap-2">
-                    <Eye className="w-4 h-4" />
+                <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2">
+                  <div className="px-3 py-1.5 sm:px-4 sm:py-2 md:px-6 md:py-2 rounded-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg text-gray-900 dark:text-white text-xs sm:text-sm font-semibold flex items-center gap-1 sm:gap-2">
+                    <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
                     Voir les détails
                   </div>
                 </div>
@@ -671,20 +709,21 @@ export const Cars: React.FC<CarsProps> = ({ onCarSelect }) => {
 
         {/* Pagination */}
         {filteredCars.length > itemsPerPage && (
-          <div className="flex justify-center items-center space-x-4 mb-12">
+          <div className="flex justify-center items-center space-x-2 sm:space-x-3 md:space-x-4 mb-8 sm:mb-12">
             <button
               onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
               disabled={currentPage === 1}
-              className="w-12 h-12 rounded-full flex items-center justify-center bg-white/50 dark:bg-gray-800/50 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center bg-white/50 dark:bg-gray-800/50 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all text-sm sm:text-base"
+              aria-label="Page précédente"
             >
-              ←
+              <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
             
-            {Array.from({ length: Math.ceil(filteredCars.length / itemsPerPage) }).map((_, idx) => (
+            {Array.from({ length: Math.ceil(filteredCars.length / itemsPerPage) }).slice(0, 5).map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setCurrentPage(idx + 1)}
-                className={`w-12 h-12 rounded-full flex items-center justify-center font-semibold transition-all duration-300 ${
+                className={`w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center font-semibold transition-all duration-300 text-sm sm:text-base ${
                   currentPage === idx + 1
                     ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg scale-110'
                     : 'bg-white/50 dark:bg-gray-800/50 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
@@ -694,49 +733,48 @@ export const Cars: React.FC<CarsProps> = ({ onCarSelect }) => {
               </button>
             ))}
             
+            {Math.ceil(filteredCars.length / itemsPerPage) > 5 && (
+              <span className="text-gray-500 dark:text-gray-400">...</span>
+            )}
+            
             <button
               onClick={() => setCurrentPage(prev => Math.min(Math.ceil(filteredCars.length / itemsPerPage), prev + 1))}
               disabled={currentPage === Math.ceil(filteredCars.length / itemsPerPage)}
-              className="w-12 h-12 rounded-full flex items-center justify-center bg-white/50 dark:bg-gray-800/50 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center bg-white/50 dark:bg-gray-800/50 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all text-sm sm:text-base"
+              aria-label="Page suivante"
             >
-              →
+              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
           </div>
         )}
 
-        {/* Results Info */}
-        <div className="text-center text-gray-600 dark:text-gray-400 mb-8">
-          Affichage de {Math.min((currentPage - 1) * itemsPerPage + 1, filteredCars.length)} à {Math.min(currentPage * itemsPerPage, filteredCars.length)} sur {filteredCars.length} véhicules
-          {selectedCategory !== 'Tous' && ` dans la catégorie "${selectedCategory}"`}
-        </div>
-
         {/* CTA Banner */}
-        <div className="mt-24 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-cyan-600/10 dark:from-blue-900/20 dark:via-purple-900/20 dark:to-cyan-900/20 rounded-3xl p-8 md:p-12 border border-blue-500/20 dark:border-blue-500/10 backdrop-blur-sm">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-            <div className="text-center md:text-left">
-              <div className="inline-flex items-center gap-2 mb-4">
-                <Sparkles className="w-6 h-6 text-blue-500" />
-                <span className="text-sm font-semibold text-blue-600 dark:text-blue-400">SERVICE PREMIUM</span>
+        <div className="mt-12 sm:mt-16 lg:mt-24 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-cyan-600/10 dark:from-blue-900/20 dark:via-purple-900/20 dark:to-cyan-900/20 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 border border-blue-500/20 dark:border-blue-500/10 backdrop-blur-sm">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-8">
+            <div className="text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 mb-3 sm:mb-4">
+                <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500" />
+                <span className="text-xs sm:text-sm font-semibold text-blue-600 dark:text-blue-400">SERVICE PREMIUM</span>
               </div>
-              <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
                 Besoin d'un véhicule spécifique ?
               </h3>
-              <p className="text-gray-600 dark:text-gray-300 max-w-2xl">
+              <p className="text-gray-600 dark:text-gray-300 max-w-2xl text-sm sm:text-base">
                 Notre équipe de conseillers se tient à votre disposition pour vous proposer 
                 des véhicules non listés ou des demandes spéciales. Service 24/7 disponible.
               </p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
               <button 
                 onClick={() => console.log('Contact conseiller')}
-                className="px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold text-lg hover:shadow-2xl hover:shadow-blue-500/25 transition-all duration-500 transform hover:scale-105 group flex items-center justify-center space-x-3"
+                className="px-4 py-3 sm:px-6 sm:py-4 md:px-8 md:py-4 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold text-sm sm:text-base md:text-lg hover:shadow-2xl hover:shadow-blue-500/25 transition-all duration-500 transform hover:scale-105 group flex items-center justify-center space-x-2 sm:space-x-3"
               >
                 <span>Contacter un conseiller</span>
-                <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+                <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 sm:group-hover:translate-x-2 transition-transform" />
               </button>
               <button 
                 onClick={() => console.log('Demander devis')}
-                className="px-8 py-4 rounded-xl bg-white/80 dark:bg-gray-800/80 border border-gray-300/50 dark:border-gray-700/50 text-gray-700 dark:text-gray-300 font-bold text-lg hover:bg-white dark:hover:bg-gray-700 transition-all duration-500 transform hover:scale-105"
+                className="px-4 py-3 sm:px-6 sm:py-4 md:px-8 md:py-4 rounded-xl bg-white/80 dark:bg-gray-800/80 border border-gray-300/50 dark:border-gray-700/50 text-gray-700 dark:text-gray-300 font-bold text-sm sm:text-base md:text-lg hover:bg-white dark:hover:bg-gray-700 transition-all duration-500 transform hover:scale-105"
               >
                 Demander un devis
               </button>
@@ -747,20 +785,21 @@ export const Cars: React.FC<CarsProps> = ({ onCarSelect }) => {
 
       {/* Video Modal */}
       {activeVideo && (
-        <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
-          <div className="relative w-full max-w-4xl">
+        <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-2 sm:p-4">
+          <div className="relative w-full max-w-2xl lg:max-w-4xl">
             <button
               onClick={() => setActiveVideo(null)}
-              className="absolute -top-12 right-0 p-3 rounded-full bg-white/20 hover:bg-white/30 transition-colors text-white"
+              className="absolute -top-8 sm:-top-10 right-0 p-2 sm:p-3 rounded-full bg-white/20 hover:bg-white/30 transition-colors text-white"
+              aria-label="Fermer la vidéo"
             >
-              ✕
+              <span className="text-lg sm:text-xl">✕</span>
             </button>
-            <div className="aspect-video bg-black rounded-xl overflow-hidden">
+            <div className="aspect-video bg-black rounded-lg sm:rounded-xl overflow-hidden">
               {/* Placeholder pour la vidéo */}
               <div className="w-full h-full flex items-center justify-center">
-                <div className="text-white text-center">
-                  <Play className="w-20 h-20 mx-auto mb-4" />
-                  <p className="text-xl">Présentation vidéo du véhicule</p>
+                <div className="text-white text-center p-4">
+                  <Play className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 mx-auto mb-3 sm:mb-4" />
+                  <p className="text-base sm:text-lg md:text-xl">Présentation vidéo du véhicule</p>
                 </div>
               </div>
             </div>
@@ -791,14 +830,14 @@ export const Cars: React.FC<CarsProps> = ({ onCarSelect }) => {
         
         @keyframes float-slow {
           0%, 100% { transform: translate(0, 0) rotate(0deg); }
-          33% { transform: translate(20px, -20px) rotate(5deg); }
-          66% { transform: translate(-10px, 10px) rotate(-5deg); }
+          33% { transform: translate(10px, -10px) rotate(3deg); }
+          66% { transform: translate(-5px, 5px) rotate(-3deg); }
         }
         
         @keyframes float-reverse {
           0%, 100% { transform: translate(0, 0) rotate(0deg); }
-          33% { transform: translate(-20px, 20px) rotate(-5deg); }
-          66% { transform: translate(10px, -10px) rotate(5deg); }
+          33% { transform: translate(-10px, 10px) rotate(-3deg); }
+          66% { transform: translate(5px, -5px) rotate(3deg); }
         }
         
         @keyframes pulse-slow {
@@ -833,6 +872,45 @@ export const Cars: React.FC<CarsProps> = ({ onCarSelect }) => {
         
         .animate-pulse-slow {
           animation: pulse-slow 2s ease-in-out infinite;
+        }
+        
+        .line-clamp-1 {
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 1;
+        }
+        
+        /* Custom scrollbar for categories on mobile */
+        @media (max-width: 1024px) {
+          .overflow-y-auto::-webkit-scrollbar {
+            height: 4px;
+          }
+          
+          .overflow-y-auto::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 2px;
+          }
+          
+          .overflow-y-auto::-webkit-scrollbar-thumb {
+            background: rgba(59, 130, 246, 0.5);
+            border-radius: 2px;
+          }
+          
+          .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+            background: rgba(59, 130, 246, 0.8);
+          }
+        }
+        
+        /* xs breakpoint styles */
+        @media (min-width: 475px) {
+          .xs\\:inline {
+            display: inline;
+          }
+          
+          .xs\\:hidden {
+            display: none;
+          }
         }
       `}</style>
     </section>

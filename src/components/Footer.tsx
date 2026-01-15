@@ -269,8 +269,8 @@ export const Footer = () => {
                     </div>
                     <div>
                       <div className="text-sm text-gray-400 mb-1">Adresse</div>
-                      <div className="text-white">123 Avenue des Champs-Élysées</div>
-                      <div className="text-gray-400">75008 Paris, France</div>
+                      <div className="text-white"> Casablanca</div>
+                      <div className="text-gray-400">Casablanca ,Maroc</div>
                     </div>
                   </li>
                   <li className="flex items-start gap-4 group cursor-pointer">
@@ -279,7 +279,7 @@ export const Footer = () => {
                     </div>
                     <div>
                       <div className="text-sm text-gray-400 mb-1">Téléphone</div>
-                      <div className="text-white">+33 1 23 45 67 89</div>
+                      <div className="text-white">+212 1 23 45 67 89</div>
                       <div className="text-gray-400">24/7 - Assistance Premium</div>
                     </div>
                   </li>
@@ -342,7 +342,7 @@ export const Footer = () => {
                   <span>Fait avec passion en France</span>
                 </div>
                 <div className="text-gray-500 text-sm">
-                  © 2024 LuxeDrive. Tous droits réservés.
+                  © 2026 LuxeDrive. Tous droits réservés.
                 </div>
               </div>
             </div>
